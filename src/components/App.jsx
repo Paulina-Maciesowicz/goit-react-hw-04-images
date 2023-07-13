@@ -7,7 +7,7 @@ import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 // import { key } from '../asset/pass';
 import css from './App.module.css';
-import { fetchData } from '../fetchData.js';
+import { fetchData } from 'fetchData';
 
 // console.log(key);
 export const App = () => {
@@ -21,9 +21,10 @@ export const App = () => {
   useEffect(() => {
     setIsLoading(true);
     const func = async () => {
+      setIsLoading(true);
       try {
-        const data = await fetchData(query, page);
-        setImages(prevImages => [...prevImages, ...data.hits]);
+        const hits = await fetchData(query, page);
+        setImages(prevImages => [...prevImages, ...hits]);
         setIsLoading(false);
       } catch (error) {
         setError(error);
