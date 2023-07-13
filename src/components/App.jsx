@@ -19,18 +19,21 @@ export const App = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(
-      `https://pixabay.com/api/?q=${query}&page=${page}&key=21858532-01f8fabf05f69063186fd3644&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then(response => response.json())
-      .then(data => {
+    const func = async () => {
+      try {
+        const response = await fetch(
+          `https://pixabay.com/api/?q=${query}&page=${page}&key=21858532-01f8fabf05f69063186fd3644&image_type=photo&orientation=horizontal&per_page=12`
+        );
+        const data = await response.json();
         setImages(prevImages => [...prevImages, ...data.hits]);
         setIsLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         setError(error);
         setIsLoading(false);
-      });
+      }
+    };
+
+    func();
   }, [query, page]);
 
   useEffect(() => {
