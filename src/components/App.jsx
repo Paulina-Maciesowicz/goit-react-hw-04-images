@@ -7,6 +7,7 @@ import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 // import { key } from '../asset/pass';
 import css from './App.module.css';
+import { fetchData } from '../fetchData.js';
 
 // console.log(key);
 export const App = () => {
@@ -21,10 +22,7 @@ export const App = () => {
     setIsLoading(true);
     const func = async () => {
       try {
-        const response = await fetch(
-          `https://pixabay.com/api/?q=${query}&page=${page}&key=21858532-01f8fabf05f69063186fd3644&image_type=photo&orientation=horizontal&per_page=12`
-        );
-        const data = await response.json();
+        const data = await fetchData(query, page);
         setImages(prevImages => [...prevImages, ...data.hits]);
         setIsLoading(false);
       } catch (error) {
